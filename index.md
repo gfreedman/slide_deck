@@ -1,26 +1,67 @@
 ---
-title       : 
-subtitle    : 
-author      : 
-job         : 
+title       : Adjustable Histogram Plotting App
+subtitle    : Automatic Vs Manual Transmissions Effect on MPG
+author      : Geoff Freedman
+job         : Data Science Dude
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : Rainbow       # 
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+logo        : ninja_puffle.jpg
+
 ---
+## Adjustable Histogram Plotting App
 
-## Read-And-Delete
+<ul>
+  <li>You can use the real app <b><a href="https://mrttackfrog.shinyapps.io/DevelopingDataProductsAssingment/" target="_blank">here</a></b></li>
+  <li>You can view the github source for the app <b><a href="https://github.com/gfreedman/DevelopingDataProductsAssingment" target="_blank">here</a></b></li>
+  <li><img src="assets/img/app.jpg" width="800px" height="412px"/></li>
+</ul>
 
-1. Edit YAML front matter
-2. Write using R Markdown
-3. Use an empty line followed by three dashes to separate slides!
 
 --- .class #id 
 
-## Slide 2
+## Overview of R plot
+
+<ul>
+  <li>You can see that initially it looks like manual transmission cars have a higher MPG than automatic ones...</li>
+  <li>But maybe weight and horsepower offer a better explanation into these MPG differences?
+</ul>
+
+![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1-1.png) 
+
+
+```r
+library(ggplot2)
+data(mtcars)
+mtcars$am <- as.factor(mtcars$am)
+levels(mtcars$am) <- c("Automatic", "Manual")
+sumMtcars <- aggregate(mpg~am, data = mtcars, function(x) mean(x))
+ggplot(mtcars, aes(x=mpg, fill=am)) + geom_histogram(binwidth=1, alpha=.5, position="identity") + geom_vline(data=sumMtcars, aes(xintercept=mpg, colour=am), linetype="dashed", size=1)
+```
+
+--- .class #id 
+
+## But what happens to MPG when we increase hp?
+
+<ul>
+  <li>When we set our minimum horsepower to <b>219</b>, the advantage quickly narrows...</li>
+  </li>
+</ul>
 
 
 
+![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.png) 
 
+--- .class #id 
+
+
+## What happens when we start increasing weight?
+
+<ul>
+  <li>Give it a <b><a href="https://mrttackfrog.shinyapps.io/DevelopingDataProductsAssingment/" target="_blank">try</a></b> yourself!</li>
+  <li>Start using the UI slider widget below and see what happens to the difference in MPG when you play with the slider!
+  <li><img src="assets/img/ui_widget.jpg" width="538px" height="303px"/></li>
+</ul>

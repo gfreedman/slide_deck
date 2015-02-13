@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Adjustable Histogram Plotting App</title>
   <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Adjustable Histogram Plotting App">
+  <meta name="author" content="Geoff Freedman">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/Rainbow.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
 
   
@@ -31,10 +31,13 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/ninja_puffle.jpg">
+  </aside>
   <hgroup class="auto-fadein">
-    <h1></h1>
-    <h2></h2>
-    <p><br/></p>
+    <h1>Adjustable Histogram Plotting App</h1>
+    <h2>Automatic Vs Manual Transmissions Effect on MPG</h2>
+    <p>Geoff Freedman<br/>Data Science Dude</p>
   </hgroup>
   <article></article>  
 </slide>
@@ -43,14 +46,14 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Read-And-Delete</h2>
+    <h2>Adjustable Histogram Plotting App</h2>
   </hgroup>
   <article data-timings="">
-    <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
-</ol>
+    <ul>
+  <li>You can use the real app <b><a href="https://mrttackfrog.shinyapps.io/DevelopingDataProductsAssingment/" target="_blank">here</a></b></li>
+  <li>You can view the github source for the app <b><a href="https://github.com/gfreedman/DevelopingDataProductsAssingment" target="_blank">here</a></b></li>
+  <li><img src="assets/img/app.jpg" width="800px" height="412px"/></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -58,10 +61,55 @@
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Slide 2</h2>
+    <h2>Overview of R plot</h2>
   </hgroup>
   <article data-timings="">
-    
+    <ul>
+  <li>You can see that initially it looks like manual transmission cars have a higher MPG than automatic ones...</li>
+  <li>But maybe weight and horsepower offer a better explanation into these MPG differences?
+</ul>
+
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+<pre><code class="r">library(ggplot2)
+data(mtcars)
+mtcars$am &lt;- as.factor(mtcars$am)
+levels(mtcars$am) &lt;- c(&quot;Automatic&quot;, &quot;Manual&quot;)
+sumMtcars &lt;- aggregate(mpg~am, data = mtcars, function(x) mean(x))
+ggplot(mtcars, aes(x=mpg, fill=am)) + geom_histogram(binwidth=1, alpha=.5, position=&quot;identity&quot;) + geom_vline(data=sumMtcars, aes(xintercept=mpg, colour=am), linetype=&quot;dashed&quot;, size=1)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>But what happens to MPG when we increase hp?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+  <li>When we set our minimum horsepower to <b>219</b>, the advantage quickly narrows...</li>
+  </li>
+</ul>
+
+<p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>What happens when we start increasing weight?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+  <li>Give it a <b><a href="https://mrttackfrog.shinyapps.io/DevelopingDataProductsAssingment/" target="_blank">try</a></b> yourself!</li>
+  <li>Start using the UI slider widget below and see what happens to the difference in MPG when you play with the slider!
+  <li><img src="assets/img/ui_widget.jpg" width="538px" height="303px"/></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -72,14 +120,26 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Read-And-Delete'>
+        data-slide=1 title='Adjustable Histogram Plotting App'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Slide 2'>
+        data-slide=2 title='Overview of R plot'>
          2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='But what happens to MPG when we increase hp?'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='What happens when we start increasing weight?'>
+         4
       </a>
     </li>
   </ul>
